@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Channels;
 using RabbitMQ.Client.Events;
 using System.Globalization;
+using SubsManagerInterface;
 
 namespace EventBusImplementation;
 
@@ -22,15 +23,18 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
     private IConnection? _persistentConsumeConnection; // supposed to be persistent, used for consumption
     private IChannel? _consumeChannel;          // supposed to be persistent, used for consumption
 
+    private ISubsManager _subsManager;
+
     // inject both parameters from config files in appsettings.json, or compose.yml
     // For testing, hardcode them and pass them to constructor
     // NOTE: persistentConnection should be a wrapper around IConnection that actually makes it
     //       persistent! For now use normal connection...
-    public IntegrationEventBusRMQ(string connectionString, string brokerName, string serviceName)
+    public IntegrationEventBusRMQ(string connectionString, string brokerName, string serviceName, ISubsManager subsManager)
     {
         _connectionString = connectionString;
         _brokerName = brokerName;
         _serviceName = serviceName;
+        _subsManager = subsManager;
     }
 
     // this deals with the RabbitMQ setup logic that in the original eShop is done by the
@@ -61,10 +65,9 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
             // from a _subsManager
             consumer.ReceivedAsync += (model, ea) =>
             {
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
+                string eventName = ea.RoutingKey;
 
-                Console.WriteLine($"(Generic Handler): {_serviceName} received message: {message}.");
+                
                 return Task.CompletedTask;
             };
 
@@ -116,7 +119,8 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
         // bind service queue to the app-level exchange, using event type as routing key
         await _consumeChannel.QueueBindAsync(queue: _serviceName, exchange: _brokerName, routingKey: eventName);
 
-        // register subscription in a _subsManager tasked with retrieving the handler
+        // register subscription in a subsManager tasked with retrieving the handler upon request
+        _subsManager.addSubscription<T, TH>();
     }
 
     public async Task Unsubscribe<T, TH>()

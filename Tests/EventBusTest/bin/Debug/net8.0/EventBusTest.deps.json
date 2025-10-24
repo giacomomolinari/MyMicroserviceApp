@@ -11,6 +11,8 @@
           "EventBusImplementation": "1.0.0",
           "EventBusInterface": "1.0.0",
           "Microsoft.NET.Test.Sdk": "17.8.0",
+          "SubsManagerImplementation": "1.0.0",
+          "SubsManagerInterface": "1.0.0",
           "coverlet.collector": "6.0.0",
           "xunit": "2.5.3",
           "xunit.runner.visualstudio": "2.5.3"
@@ -1053,7 +1055,8 @@
       "EventBusImplementation/1.0.0": {
         "dependencies": {
           "EventBusInterface": "1.0.0",
-          "RabbitMQ.Client": "7.1.2"
+          "RabbitMQ.Client": "7.1.2",
+          "SubsManagerInterface": "1.0.0"
         },
         "runtime": {
           "EventBusImplementation.dll": {
@@ -1065,6 +1068,25 @@
       "EventBusInterface/1.0.0": {
         "runtime": {
           "EventBusInterface.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SubsManagerImplementation/1.0.0": {
+        "dependencies": {
+          "SubsManagerInterface": "1.0.0"
+        },
+        "runtime": {
+          "SubsManagerImplementation.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SubsManagerInterface/1.0.0": {
+        "runtime": {
+          "SubsManagerInterface.dll": {
             "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1728,6 +1750,16 @@
       "sha512": ""
     },
     "EventBusInterface/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SubsManagerImplementation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SubsManagerInterface/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

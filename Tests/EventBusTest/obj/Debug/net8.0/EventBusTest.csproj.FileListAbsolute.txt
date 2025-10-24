@@ -106,3 +106,7 @@ C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\Eve
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\EventBusTest.genruntimeconfig.cache
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\ref\EventBusTest.dll
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\EventBusTest.sourcelink.json
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\SubsManagerInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\SubsManagerInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\SubsManagerImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\SubsManagerImplementation.pdb

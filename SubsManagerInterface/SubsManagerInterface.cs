@@ -2,7 +2,7 @@
 
 namespace SubsManagerInterface;
 
-public interface SubsManagerInterface
+public interface ISubsManager
 {
 
     // Add a subscription for events:T to be handled by handler: TH
@@ -13,6 +13,6 @@ public interface SubsManagerInterface
 
     // Return handler type name for events of type T
     // Return null if there is no subscription to events of type T
-    string? getHandlerTypeIfSubscribed<T>();
+    List<string>? getHandlerTypeIfSubscribed(string eventTypeName);
 
 }

@@ -9,7 +9,8 @@
       "EventBusImplementation/1.0.0": {
         "dependencies": {
           "EventBusInterface": "1.0.0",
-          "RabbitMQ.Client": "7.1.2"
+          "RabbitMQ.Client": "7.1.2",
+          "SubsManagerInterface": "1.0.0"
         },
         "runtime": {
           "EventBusImplementation.dll": {}
@@ -50,6 +51,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "SubsManagerInterface/1.0.0": {
+        "runtime": {
+          "SubsManagerInterface.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -81,6 +90,11 @@
       "hashPath": "system.threading.ratelimiting.8.0.0.nupkg.sha512"
     },
     "EventBusInterface/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SubsManagerInterface/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

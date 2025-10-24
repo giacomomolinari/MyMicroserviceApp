@@ -1,13 +1,16 @@
 using Xunit;
 using Xunit.Abstractions;
-using EventBusInterface;
-using EventBusImplementation;
 using System.Data.Common;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using System.Text.Json;
+using EventBusInterface;
+using EventBusImplementation;
+using SubsManagerInterface;
+using SubsManagerImplementation;
+
 
 namespace EventBusTest;
 
@@ -18,6 +21,8 @@ public class TestRabbitMQBus
     private string connectionString = "localhost";
     private string brokerName = "testBroker";
     private string serviceName = "testService";
+
+    private ISubsManager subsManager = new SubsManagerStub();
 
     private ITestOutputHelper _output;
 
@@ -89,7 +94,7 @@ public class TestRabbitMQBus
         await channel.BasicConsumeAsync(queueName, autoAck: true, consumer: consumer);
 
         // Publish testEvent 
-        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName);
+        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager);
         await myBus.Publish(testEvent);
 
         // wait 5 seconds, and if they pass, change the value of cts
@@ -106,12 +111,12 @@ public class TestRabbitMQBus
     ///  2. Publish a TestEvent 
     /// </summary>
     /// 
-    
+
     [Fact]
     public async void TestSubscribe()
     {
         // create eventBus and start up consumer connection
-        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName);
+        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager);
         string consumerTag = await myBus.EstablishConsumeConnection();
 
         // subscribe to TestEvent events
@@ -124,5 +129,5 @@ public class TestRabbitMQBus
         // sloppy way to wait for the message to be received and the generic callback to be called
         await Task.Delay(1000);
     }
-    
+
 }
