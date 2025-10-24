@@ -60,6 +60,16 @@
         "runtime": {
           "bin/placeholder/EventBusInterface.dll": {}
         }
+      },
+      "SubsManagerInterface/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SubsManagerInterface.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SubsManagerInterface.dll": {}
+        }
       }
     }
   },
@@ -143,12 +153,18 @@
       "type": "project",
       "path": "../EventBusInterface/EventBusInterface.csproj",
       "msbuildProject": "../EventBusInterface/EventBusInterface.csproj"
+    },
+    "SubsManagerInterface/1.0.0": {
+      "type": "project",
+      "path": "../SubsManagerInterface/SubsManagerInterface.csproj",
+      "msbuildProject": "../SubsManagerInterface/SubsManagerInterface.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "EventBusInterface >= 1.0.0",
-      "RabbitMQ.Client >= 7.1.2"
+      "RabbitMQ.Client >= 7.1.2",
+      "SubsManagerInterface >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -178,6 +194,9 @@
           "projectReferences": {
             "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusInterface\\EventBusInterface.csproj": {
               "projectPath": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusInterface\\EventBusInterface.csproj"
+            },
+            "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerInterface\\SubsManagerInterface.csproj": {
+              "projectPath": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerInterface\\SubsManagerInterface.csproj"
             }
           }
         }

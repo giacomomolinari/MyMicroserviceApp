@@ -35,8 +35,8 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
     // this deals with the RabbitMQ setup logic that in the original eShop is done by the
     // constructor. Done to simplify things after channel creation became Async in RabbitMQ.
-    // does nothing on multiple calls (should allow to re-establish connection if closed...)
-    public async void EstablishConsumeConnection()
+    // This does nothing on multiple calls (should allow it to re-establish connection if closed...)
+    public async Task<string> EstablishConsumeConnection()
     {
         if (_persistentConsumeConnection == null)
         {
@@ -56,21 +56,27 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
             // create consumer
             var consumer = new AsyncEventingBasicConsumer(_consumeChannel);
 
-            // add generic callback method
+            // Add generic callback method
+            // Currently just a stub, need to add an effective generic callback that retrieves a handler
+            // from a _subsManager
             consumer.ReceivedAsync += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"{_serviceName} received message: {message}");
+
+                Console.WriteLine($"(Generic Handler): {_serviceName} received message: {message}.");
                 return Task.CompletedTask;
             };
 
-            // start consuming the queue
-           
+            // start consuming the queue 
+            string res = await _consumeChannel.BasicConsumeAsync(queue: _serviceName, autoAck: true, consumer: consumer);
+
+            return res;
         }
+        else return "Connection already established";
     }
 
-    public async void Publish(IntegrationEvent @event)
+    public async Task Publish(IntegrationEvent @event)
     {
         var eventName = @event.GetType().Name;
         var factory = new ConnectionFactory() { HostName = _connectionString };
@@ -97,14 +103,23 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
     }
 
-    public void Subscribe<T, TH>()
+    public async Task Subscribe<T, TH>()
     where T : IntegrationEvent
     where TH : IntegrationEventHandler<T>
     {
-        // implement w/ RabbitMQ
+        if (_consumeChannel == null)
+        {
+            throw new InvalidOperationException("Consume connection not established yet.");
+        }
+
+        string eventName = typeof(T).Name;
+        // bind service queue to the app-level exchange, using event type as routing key
+        await _consumeChannel.QueueBindAsync(queue: _serviceName, exchange: _brokerName, routingKey: eventName);
+
+        // register subscription in a _subsManager tasked with retrieving the handler
     }
 
-    public void Unsubscribe<T, TH>()
+    public async Task Unsubscribe<T, TH>()
     where T : IntegrationEvent
     where TH : IntegrationEventHandler<T>
     {

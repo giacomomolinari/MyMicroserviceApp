@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventBusInterface\EventBusInterface.csproj" />
+    <ProjectReference Include="..\SubsManagerInterface\SubsManagerInterface.csproj" />
   </ItemGroup>
 
 </Project>

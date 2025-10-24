@@ -9,3 +9,4 @@ C:\Users\molin\Desktop\MyMicroserviceApp\EventBusInterface\obj\Debug\net8.0\Even
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusInterface\obj\Debug\net8.0\refint\EventBusInterface.dll
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusInterface\obj\Debug\net8.0\EventBusInterface.pdb
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusInterface\obj\Debug\net8.0\ref\EventBusInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusInterface\obj\Debug\net8.0\EventBusInterface.sourcelink.json

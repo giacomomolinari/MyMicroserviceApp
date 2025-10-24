@@ -13,3 +13,4 @@ C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusInterface.dll
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusInterface.pdb
 C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBus.E601A2EE.Up2Date
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.sourcelink.json

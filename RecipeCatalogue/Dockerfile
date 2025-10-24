@@ -4,11 +4,14 @@ WORKDIR /src
 COPY RecipeCatalogue/*.csproj RecipeCatalogue/
 COPY EventBusInterface/*.csproj EventBusInterface/
 COPY EventBusImplementation/*.csproj EventBusImplementation/
+COPY SubsManagerInterface/*.csproj SubsManagerInterface/
+COPY SubsManagerImplementation/*.csproj SubsManagerImplementation/ 
 
 RUN dotnet restore RecipeCatalogue/RecipeCatalogue.csproj
 RUN dotnet restore EventBusInterface/EventBusInterface.csproj
 RUN dotnet restore EventBusImplementation/EventBusImplementation.csproj
-
+RUN dotnet restore SubsManagerInterface/SubsManagerInterface.csproj
+RUN dotnet restore SubsManagerImplementation/SubsManagerImplementation.csproj
 COPY . .
 
 WORKDIR /src/RecipeCatalogue

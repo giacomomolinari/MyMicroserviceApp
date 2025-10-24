@@ -105,3 +105,4 @@ C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\ref
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\EventBusTest.pdb
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\EventBusTest.genruntimeconfig.cache
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\ref\EventBusTest.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\obj\Debug\net8.0\EventBusTest.sourcelink.json

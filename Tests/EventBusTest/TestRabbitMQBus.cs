@@ -52,7 +52,7 @@ public class TestRabbitMQBus
     public async void TestPublish()
     {
         // event to be published
-        TestEvent testEvent = new TestEvent("TEST MESSAGE");
+        TestEvent testEvent = new TestEvent("TEST MESSAGE - TestPublish");
 
         // Use RabbitMQ directly to subscribe to test exchange and receive event 
         var eventName = testEvent.GetType().Name;
@@ -90,7 +90,7 @@ public class TestRabbitMQBus
 
         // Publish testEvent 
         IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName);
-        myBus.Publish(testEvent);
+        await myBus.Publish(testEvent);
 
         // wait 5 seconds, and if they pass, change the value of cts
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -105,12 +105,24 @@ public class TestRabbitMQBus
     ///  1. Subscribe to TestEvent type events using Subscribe method
     ///  2. Publish a TestEvent 
     /// </summary>
-    /**
+    /// 
+    
     [Fact]
     public async void TestSubscribe()
     {
+        // create eventBus and start up consumer connection
+        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName);
+        string consumerTag = await myBus.EstablishConsumeConnection();
 
+        // subscribe to TestEvent events
+        await myBus.Subscribe<TestEvent, TestEventHandler>();
 
-        
-    }**/
+        // event to be published
+        TestEvent testEvent = new TestEvent("TEST MESSAGE - Test Subscribe");
+        await myBus.Publish(testEvent);
+
+        // sloppy way to wait for the message to be received and the generic callback to be called
+        await Task.Delay(1000);
+    }
+    
 }

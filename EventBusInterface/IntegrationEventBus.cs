@@ -2,13 +2,15 @@
 
 public interface IntegrationEventBus
 {
-    void Publish(IntegrationEvent @event);
+    Task Publish(IntegrationEvent @event);
 
-    void Subscribe<T, TH>()
+    Task Subscribe<T, TH>()
     where T: IntegrationEvent
     where TH: IntegrationEventHandler<T>;
 
-    void Unsubscribe<T,TH>()
-    where T: IntegrationEvent
-    where TH: IntegrationEventHandler<T>;
+    Task Unsubscribe<T, TH>()
+    where T : IntegrationEvent
+    where TH : IntegrationEventHandler<T>;
+
+    Task<string> EstablishConsumeConnection();
 }
