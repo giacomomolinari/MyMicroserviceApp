@@ -1,0 +1,12 @@
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\bin\Debug\net8.0\SubsManagerInterface.deps.json
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\bin\Debug\net8.0\SubsManagerInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\bin\Debug\net8.0\SubsManagerInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.AssemblyInfoInputs.cache
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.AssemblyInfo.cs
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.csproj.CoreCompileInputs.cache
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.sourcelink.json
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\refint\SubsManagerInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\SubsManagerInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\SubsManagerInterface\obj\Debug\net8.0\ref\SubsManagerInterface.dll
