@@ -1,0 +1,15 @@
+version: "0.1"
+services:
+  recipes-api:
+    #build: THIS IS NEEDED IF I'M BUILDING THE IMAGE, TO LET DOCKER KNOW WHERE THE FILES ARE FOR THIS SERVICE!
+      #context: ./RecipeCatalogue  
+      #dockerfile: Dockerfile
+    image: recipecatalogue
+    environment: 
+      ConnectionString: "mongodb://host.docker.internal:27017"
+      DatabaseName: "RecipesDB"
+      RecipesCollectionName: "Recipes"
+    expose:
+      - "80"
+    ports:
+      - "8080:80"

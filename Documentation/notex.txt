@@ -1,0 +1,106 @@
+////////////////////////////////////////////////////////////////////
+            OUTLINE OF SERVICES AND OTHER COMPONENTS
+////////////////////////////////////////////////////////////////////
+
+///////////////////////////////
+    RECIPECATALOGUE
+///////////////////////////////
+
+...
+
+
+///////////////////////////////
+    EVENT BUS
+///////////////////////////////
+
+Inteface in EventBusInterface.
+
+Implementation using RabbitMQ in EventBusImplementation.
+
+Offers methods to publish events and subscribe to them.
+
+...
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+            RUNNING INDIVIDUAL SERVICES IN DOCKER
+////////////////////////////////////////////////////////////////////
+
+To build RecipeCatalogue image, in directory ./MyMicroserviceApp, run:
+ 
+    docker build -t recipecatalogue -f RecipeCatalogue/Dockerfile .
+
+This uses the Dockerfile inside RecipeCatalogue folder to build an image for the
+recipecatalogue microservice. Note that by calling the command in ./MyMicroserviceApp, the
+docker build command can see the libraries for the RabbitMQ bus, which are referenced in
+the Dockerfile and included in the container! I.e. the container will include a copy of these
+libraries, as well as a copy of the RecipeCatalogue folder.
+
+To run the image in a Docker container, run:
+
+    docker run -p 8080:80 -d --name recipes recipecatalogue
+
+This creates a container called "recipes" whose api can be accessed on port 8080
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+            RUNNING THE ENTIRE APP (DOCKER COMPOSE)
+////////////////////////////////////////////////////////////////////
+
+
+TBD
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+                        UNIT TESTING
+////////////////////////////////////////////////////////////////////
+
+In directory Tests, find sub-directories for testing various components of the app.
+
+In the appropriate sub-directory, run:
+    
+    dotnet test
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+                            MONGODB
+////////////////////////////////////////////////////////////////////
+
+The MongoDB database runs locally for the moment.
+
+Start the database server by running:
+    mongod -dbpath ./MongoStore
+in C:\
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+                             RABBITMQ
+////////////////////////////////////////////////////////////////////
+
+The RabbitMQ service runs as a container.
+
+Start the RabbitMQ container by running:
+    docker run -it --rm -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+
+
+

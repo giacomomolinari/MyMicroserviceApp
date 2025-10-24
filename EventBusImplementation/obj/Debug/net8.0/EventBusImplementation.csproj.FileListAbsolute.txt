@@ -1,0 +1,15 @@
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusImplementation.deps.json
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusImplementation.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.csproj.AssemblyReference.cache
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.AssemblyInfoInputs.cache
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.AssemblyInfo.cs
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.csproj.CoreCompileInputs.cache
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\refint\EventBusImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBusImplementation.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\ref\EventBusImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\bin\Debug\net8.0\EventBusInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\EventBusImplementation\obj\Debug\net8.0\EventBus.E601A2EE.Up2Date
