@@ -9,6 +9,8 @@ public class SubsManagerStub : ISubsManager
     // case the service stops running...
     private Dictionary<string, List<Type>> _subscriptionDict = new Dictionary<string, List<Type>>();
 
+    private Dictionary<string, Type> _eventNameTypeDict = new Dictionary<string, Type>();
+
     public void addSubscription<T, TH>()
     {
         string eventName = typeof(T).Name;
@@ -24,7 +26,7 @@ public class SubsManagerStub : ISubsManager
             handlerTypeList = new List<Type> { eventHandlerType };
             _subscriptionDict.Add(eventName, handlerTypeList);             // ..add new list containing entry to dictionary
         }
-
+        _eventNameTypeDict[eventName] = typeof(T);
     }
 
     /// <summary>
@@ -41,6 +43,12 @@ public class SubsManagerStub : ISubsManager
         return handlerTypeList;
 
     }
+
+    public Type getEventType(string eventTypeName)
+    {
+        return _eventNameTypeDict[eventTypeName];
+    }
+
 
     public void removeSubscription<T, TH>()
     {

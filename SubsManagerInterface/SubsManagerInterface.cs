@@ -11,8 +11,11 @@ public interface ISubsManager
     // Remove a subscription for events:T to be handled by handler: TH
     void removeSubscription<T, TH>();
 
-    // Return handler type name for events of type T
+    // Return handler types for events of type T
     // Return null if there is no subscription to events of type T
     List<Type>? getHandlerTypeIfSubscribed(string eventTypeName);
+
+    // return even type associated to event type name
+    Type getEventType(string eventTypeName);
 
 }

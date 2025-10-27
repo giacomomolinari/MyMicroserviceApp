@@ -68,10 +68,7 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
             // Add generic callback method
             // Currently just a stub, need to add an effective generic callback that retrieves a handler
             // from a _subsManager
-            consumer.ReceivedAsync += (model, ea) =>
-            {
-                return Task.CompletedTask;
-            };
+            consumer.ReceivedAsync += GenericHandler;
 
             // start consuming the queue 
             string res = await _consumeChannel.BasicConsumeAsync(queue: _serviceName, autoAck: true, consumer: consumer);
@@ -84,15 +81,18 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
     private async Task GenericHandler(object? model, BasicDeliverEventArgs ea)
     {
+
         // Get the type name of the event received
         string eventName = ea.RoutingKey;
         var body = ea.Body.ToArray();
         string serializedEvent = Encoding.UTF8.GetString(body);
 
-        // I'm pretty sure this won't work, because JsonSerializer will ignore the fields of the
-        // actual event (e.g. TestEvent) and only return an object with the IntegrationEvent fields!
-        // This in turn breaks the TestEventHandler which expects a TestEvent object with a Message field!
-        IntegrationEvent? @event = JsonSerializer.Deserialize<IntegrationEvent>(serializedEvent);
+        // get the concrete event type of the event received
+        Type eventType = _subsManager.getEventType(eventName);
+
+        var @event = JsonSerializer.Deserialize(serializedEvent, eventType);
+        
+        // TEST Console.WriteLine($"Generic handler is handling event = {@event}");
 
         // Ask _subsManager for its handler type
         List<Type>? handlerList = _subsManager.getHandlerTypeIfSubscribed(eventName);

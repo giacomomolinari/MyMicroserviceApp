@@ -122,9 +122,8 @@ public class TestRabbitMQBus
         var services = new ServiceCollection();
         // add event handler
         services.AddTransient<TestEventHandler>();
-        
-        var serviceProvider = services.BuildServiceProvider();
 
+        var serviceProvider = services.BuildServiceProvider();
 
         // create eventBus and start up consumer connection
         IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager, serviceProvider);
