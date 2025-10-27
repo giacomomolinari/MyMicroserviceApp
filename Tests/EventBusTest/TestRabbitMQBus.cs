@@ -38,7 +38,8 @@ public class TestRabbitMQBus
     public void TestEventClasses()
     {
         TestEvent testEvent = new TestEvent("TEST");
-        TestEventHandler testEventHandler = new TestEventHandler();
+        var tcs = new TaskCompletionSource<TestEvent>();
+        TestEventHandler testEventHandler = new TestEventHandler(tcs);
         Console.WriteLine("Hello World!");
         var res = testEventHandler.HandleAsync(testEvent);
 
@@ -122,6 +123,8 @@ public class TestRabbitMQBus
         var services = new ServiceCollection();
         // add event handler
         services.AddTransient<TestEventHandler>();
+        var tcs = new TaskCompletionSource<TestEvent>();
+        services.AddSingleton(tcs);
 
         var serviceProvider = services.BuildServiceProvider();
 
@@ -136,9 +139,8 @@ public class TestRabbitMQBus
         TestEvent testEvent = new TestEvent("TEST MESSAGE - Test Subscribe");
         await myBus.Publish(testEvent);
 
-        // sloppy way to wait for the message to be received and the generic callback to be called
-        // CHANGE THIS ASAP
-        await Task.Delay(1000);
+        var received = await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.Equal(testEvent, received);
     }
 
 }

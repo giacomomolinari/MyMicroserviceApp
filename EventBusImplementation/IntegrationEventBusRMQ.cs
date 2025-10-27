@@ -92,7 +92,7 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
         var @event = JsonSerializer.Deserialize(serializedEvent, eventType);
         
-        // TEST Console.WriteLine($"Generic handler is handling event = {@event}");
+        // TESTgit s Console.WriteLine($"Generic handler is handling event = {@event}");
 
         // Ask _subsManager for its handler type
         List<Type>? handlerList = _subsManager.getHandlerTypeIfSubscribed(eventName);
