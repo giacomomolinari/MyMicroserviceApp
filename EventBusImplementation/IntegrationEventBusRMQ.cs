@@ -11,6 +11,8 @@ using System.Threading.Channels;
 using RabbitMQ.Client.Events;
 using System.Globalization;
 using SubsManagerInterface;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace EventBusImplementation;
 
@@ -25,16 +27,19 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
     private ISubsManager _subsManager;
 
+    private IServiceProvider _serviceProvider; 
+
     // inject both parameters from config files in appsettings.json, or compose.yml
     // For testing, hardcode them and pass them to constructor
     // NOTE: persistentConnection should be a wrapper around IConnection that actually makes it
     //       persistent! For now use normal connection...
-    public IntegrationEventBusRMQ(string connectionString, string brokerName, string serviceName, ISubsManager subsManager)
+    public IntegrationEventBusRMQ(string connectionString, string brokerName, string serviceName, ISubsManager subsManager, IServiceProvider serviceProvider)
     {
         _connectionString = connectionString;
         _brokerName = brokerName;
         _serviceName = serviceName;
         _subsManager = subsManager;
+        _serviceProvider = serviceProvider;
     }
 
     // this deals with the RabbitMQ setup logic that in the original eShop is done by the
@@ -65,9 +70,6 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
             // from a _subsManager
             consumer.ReceivedAsync += (model, ea) =>
             {
-                string eventName = ea.RoutingKey;
-
-                
                 return Task.CompletedTask;
             };
 
@@ -77,6 +79,44 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
             return res;
         }
         else return "Connection already established";
+    }
+
+
+    private async Task GenericHandler(object? model, BasicDeliverEventArgs ea)
+    {
+        // Get the type name of the event received
+        string eventName = ea.RoutingKey;
+        var body = ea.Body.ToArray();
+        string serializedEvent = Encoding.UTF8.GetString(body);
+
+        // I'm pretty sure this won't work, because JsonSerializer will ignore the fields of the
+        // actual event (e.g. TestEvent) and only return an object with the IntegrationEvent fields!
+        // This in turn breaks the TestEventHandler which expects a TestEvent object with a Message field!
+        IntegrationEvent? @event = JsonSerializer.Deserialize<IntegrationEvent>(serializedEvent);
+
+        // Ask _subsManager for its handler type
+        List<Type>? handlerList = _subsManager.getHandlerTypeIfSubscribed(eventName);
+
+        if (handlerList == null)
+        {
+            throw new NullReferenceException("No handler available for subscribed event.");
+        } else {
+    
+            foreach (Type handlerType in handlerList)
+            {
+                // Request handler from DI and use it to invoke HandleAsync method
+                object concreteHandler = _serviceProvider.GetRequiredService(handlerType);
+                MethodInfo? concreteMethod = handlerType.GetMethod("HandleAsync");
+                if (concreteMethod == null)
+                {
+                    throw new NullReferenceException($"Could not retrieve HandleAsync method for halderType = {handlerType}");
+                }
+                await (Task) concreteMethod.Invoke(concreteHandler, new object[] { @event});
+            }
+        }
+        
+        
+
     }
 
     public async Task Publish(IntegrationEvent @event)

@@ -10,7 +10,8 @@ using EventBusInterface;
 using EventBusImplementation;
 using SubsManagerInterface;
 using SubsManagerImplementation;
-
+using System.Security.Authentication.ExtendedProtection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EventBusTest;
 
@@ -93,8 +94,12 @@ public class TestRabbitMQBus
         // have consumer consume from the queue created above
         await channel.BasicConsumeAsync(queueName, autoAck: true, consumer: consumer);
 
+        // create service provider (needed to initialize IntegrationEventBusRMQ). No need to actually add services for this test
+        var services = new ServiceCollection();
+        var serviceProvider = services.BuildServiceProvider();
+
         // Publish testEvent 
-        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager);
+        IntegrationEventBus myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager, serviceProvider);
         await myBus.Publish(testEvent);
 
         // wait 5 seconds, and if they pass, change the value of cts
@@ -110,13 +115,19 @@ public class TestRabbitMQBus
     ///  1. Subscribe to TestEvent type events using Subscribe method
     ///  2. Publish a TestEvent 
     /// </summary>
-    /// 
-
     [Fact]
     public async void TestSubscribe()
     {
+        // create service provider (needed to initialize IntegrationEventBusRMQ). 
+        var services = new ServiceCollection();
+        // add event handler
+        services.AddTransient<TestEventHandler>();
+        
+        var serviceProvider = services.BuildServiceProvider();
+
+
         // create eventBus and start up consumer connection
-        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager);
+        IntegrationEventBusRMQ myBus = new IntegrationEventBusRMQ(connectionString, brokerName, serviceName, subsManager, serviceProvider);
         string consumerTag = await myBus.EstablishConsumeConnection();
 
         // subscribe to TestEvent events
@@ -127,6 +138,7 @@ public class TestRabbitMQBus
         await myBus.Publish(testEvent);
 
         // sloppy way to wait for the message to be received and the generic callback to be called
+        // CHANGE THIS ASAP
         await Task.Delay(1000);
     }
 

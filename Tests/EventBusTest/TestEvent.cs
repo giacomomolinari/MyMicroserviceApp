@@ -6,7 +6,9 @@ namespace EventBusTest;
 public record TestEvent: IntegrationEvent
 {
 
-    public string  Message {get; set;}
+    public string Message { get; set; }
+    
+    
     
     public TestEvent(string Message)
     {

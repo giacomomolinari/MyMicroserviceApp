@@ -13,6 +13,6 @@ public interface ISubsManager
 
     // Return handler type name for events of type T
     // Return null if there is no subscription to events of type T
-    List<string>? getHandlerTypeIfSubscribed(string eventTypeName);
+    List<Type>? getHandlerTypeIfSubscribed(string eventTypeName);
 
 }
