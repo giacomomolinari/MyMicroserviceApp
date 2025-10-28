@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecipeCatalogue.Models;
 using RecipeCatalogue.Services;
+using EventBusInterface;
+
 
 namespace RecipeCatalogue.Controllers;
 
@@ -15,10 +17,12 @@ namespace RecipeCatalogue.Controllers;
 public class RecipePostsController : ControllerBase
 {
     private readonly RecipeDBService _recipeDBService;
+    private readonly IntegrationEventBus _eventBus;
 
-    public RecipePostsController(RecipeDBService recipeDBService)
+    public RecipePostsController(RecipeDBService recipeDBService, IntegrationEventBus eventBus)
     {
         _recipeDBService = recipeDBService;
+        _eventBus = eventBus;
     }
 
 
@@ -78,7 +82,11 @@ public class RecipePostsController : ControllerBase
     {
         await _recipeDBService.CreateAsync(recipePost);
 
+        // create new RecipeCreatedEvent containig new recipe post information
+        RecipeCreatedEvent @event = new RecipeCreatedEvent(recipePost);
+
         // send a new RecipeCreatedEvent
+        await _eventBus.Publish(@event);
 
         return CreatedAtAction(nameof(GetRecipePost), new { id = recipePost.Id }, recipePost);
     }
