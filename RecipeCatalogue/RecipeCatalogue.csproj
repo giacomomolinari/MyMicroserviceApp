@@ -25,6 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EventBusImplementation\EventBusImplementation.csproj" />
     <ProjectReference Include="..\EventBusInterface\EventBusInterface.csproj" />
+    <ProjectReference Include="..\SubsManagerInterface\SubsManagerInterface.csproj" />
+    <ProjectReference Include="..\SubsManagerImplementation\SubsManagerImplementation.csproj" />
   </ItemGroup>
 
 </Project>

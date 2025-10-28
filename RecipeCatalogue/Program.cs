@@ -2,11 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using RecipeCatalogue.Models;
 using RecipeCatalogue.Services;
 
+using SubsManagerInterface;
+using SubsManagerImplementation;
+using EventBusInterface;
+using EventBusImplementation;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://*:80");
 
-// Add services to the container.
+// Add controller as a Transient service to the DI
 builder.Services.AddControllers()
     .AddJsonOptions( // makes it so property names in the web API's json
                      // match the names in the RecipePost class
@@ -24,7 +30,7 @@ builder.Services.AddSingleton<RecipeDBService>();
 
 builder.Services.AddSingleton<LikesCollectionService>();
 
-// In memory store
+// In memory store, USED FOR TESTING
 //builder.Services.AddDbContext<RecipeCatalogueContext>(opt => 
 //   opt.UseInMemoryDatabase("RecipeList"));
 
@@ -32,6 +38,31 @@ builder.Services.AddSingleton<LikesCollectionService>();
 // the settings from everywhere in the app
 builder.Services.Configure<RecipeDBSettings>(
     builder.Configuration.GetSection("RecipesDatabase"));
+
+// Adds the RabbitMQSettings to the DI as well.
+// NOTE: Actually now I think this may not be needed, since I need to manually pass the arguments to the 
+//       EventBusRabbitMQ constructor anyway...
+builder.Services.Configure<RabbitMQSettings>(
+    builder.Configuration.GetSection("RabbitMQHost")
+);
+
+// Add SubsManager to the DI
+builder.Services.AddSingleton<ISubsManager, SubsManagerStub>();
+
+// Add EventBus to the DI, passing the settings a
+builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
+{
+    var rabbitMQSettings = serviceProvider.GetRequiredService<IOptions<RabbitMQSettings>>().Value;
+    var subsManager = serviceProvider.GetRequiredService<ISubsManager>();
+
+    return new IntegrationEventBusRMQ(
+        connectionString: rabbitMQSettings.ConnectionString,
+        brokerName: rabbitMQSettings.BrokerName,
+        serviceName: rabbitMQSettings.ServiceName,
+        subsManager: subsManager,
+        serviceProvider: serviceProvider
+        );
+});
 
 var app = builder.Build();
 

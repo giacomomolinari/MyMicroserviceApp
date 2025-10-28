@@ -3131,6 +3131,19 @@
           "bin/placeholder/EventBusInterface.dll": {}
         }
       },
+      "SubsManagerImplementation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "SubsManagerInterface": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SubsManagerImplementation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SubsManagerImplementation.dll": {}
+        }
+      },
       "SubsManagerInterface/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -8649,6 +8662,11 @@
       "path": "../EventBusInterface/EventBusInterface.csproj",
       "msbuildProject": "../EventBusInterface/EventBusInterface.csproj"
     },
+    "SubsManagerImplementation/1.0.0": {
+      "type": "project",
+      "path": "../SubsManagerImplementation/SubsManagerImplementation.csproj",
+      "msbuildProject": "../SubsManagerImplementation/SubsManagerImplementation.csproj"
+    },
     "SubsManagerInterface/1.0.0": {
       "type": "project",
       "path": "../SubsManagerInterface/SubsManagerInterface.csproj",
@@ -8665,6 +8683,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.9",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 9.0.0",
       "MongoDB.Driver >= 3.5.0",
+      "SubsManagerImplementation >= 1.0.0",
+      "SubsManagerInterface >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
@@ -8698,6 +8718,12 @@
             },
             "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusInterface\\EventBusInterface.csproj": {
               "projectPath": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusInterface\\EventBusInterface.csproj"
+            },
+            "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerImplementation\\SubsManagerImplementation.csproj": {
+              "projectPath": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerImplementation\\SubsManagerImplementation.csproj"
+            },
+            "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerInterface\\SubsManagerInterface.csproj": {
+              "projectPath": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerInterface\\SubsManagerInterface.csproj"
             }
           }
         }

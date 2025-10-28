@@ -78,6 +78,8 @@ public class RecipePostsController : ControllerBase
     {
         await _recipeDBService.CreateAsync(recipePost);
 
+        // send a new RecipeCreatedEvent
+
         return CreatedAtAction(nameof(GetRecipePost), new { id = recipePost.Id }, recipePost);
     }
 

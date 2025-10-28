@@ -30,7 +30,7 @@ Offers methods to publish events and subscribe to them.
             RUNNING INDIVIDUAL SERVICES IN DOCKER
 ////////////////////////////////////////////////////////////////////
 
-To build RecipeCatalogue image, in directory ./MyMicroserviceApp, run:
+To build an individual service's, e.g. RecipeCatalogue's, image, in directory ./MyMicroserviceApp run:
  
     docker build -t recipecatalogue -f RecipeCatalogue/Dockerfile .
 
@@ -44,7 +44,16 @@ To run the image in a Docker container, run:
 
     docker run -p 8080:80 -d --name recipes recipecatalogue
 
-This creates a container called "recipes" whose api can be accessed on port 8080
+This creates a container called "recipes" whose api can be accessed on port 8080.
+
+To implement connections between services running on Docker, first create a virtual network with:
+
+    docker network create MyMicroserviceAppNetwork
+
+Then to run a container on the network, use the following variation of the above run command:
+
+    docker run -p 8080:80 --network MyMicroserviceAppNetwork -d --name recipes recipecatalogue
+
 
 
 
@@ -102,6 +111,11 @@ The RabbitMQ service runs as a container.
 Start the RabbitMQ container by running:
     docker run -it --rm -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
 
+OSS: To run RabbitMQ on the Docker virtual network for the application, use:
+
+     docker run -it --rm --network MyMicroserviceAppNetwork -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+
+This makes it so that RabbitMQ can be accessed with HostName = "rabbimq" (i.e. the name of the RabbiMQ service in Docker!)
 
 To look at the status of RabbitMQ, including queues, exchanges and messages, go to:
     http://localhost:15672
