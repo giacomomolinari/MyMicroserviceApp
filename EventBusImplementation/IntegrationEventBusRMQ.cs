@@ -90,10 +90,12 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
         // get the concrete event type of the event received
         Type eventType = _subsManager.getEventType(eventName);
 
-        var @event = JsonSerializer.Deserialize(serializedEvent, eventType);
-        
-        // TESTgit s Console.WriteLine($"Generic handler is handling event = {@event}");
+        // TEST ONLY Console.WriteLine($"Received serialized event {serializedEvent} and made it to deserialization");
 
+        var @event = JsonSerializer.Deserialize(serializedEvent, eventType);
+
+        // TEST ONLY Console.WriteLine($"Made it past deserialization with event = {@event}");
+        
         // Ask _subsManager for its handler type
         List<Type>? handlerList = _subsManager.getHandlerTypeIfSubscribed(eventName);
 

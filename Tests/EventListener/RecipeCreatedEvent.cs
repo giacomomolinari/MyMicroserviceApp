@@ -3,23 +3,28 @@ using System;
 
 namespace EventListener;
 
-public record RecipeCreatedEvent: IntegrationEvent
+public class RecipeCreatedEvent: IntegrationEvent
 {
 
-    public string? Message { get; private set; }
-    
-    public string? RecipeId { get; private set; }
+    public string? Message { get;  set; }
 
-    public string? RecipeName { get; private set; }
+    public DateTime? RecipeCreationDate { get;  set; }  
 
-    public string? AuthorName { get; private set; }
+    public string? RecipeId { get;  set; }
+
+    public string? RecipeName { get;  set; }
+
+    public string? AuthorName { get;  set; }
 
 
-    public RecipeCreatedEvent(string recipeId, string recipeName, string authorName, string message = "")
+    public RecipeCreatedEvent() { } // this is supposed to fix the deserialization problem?
+
+    public RecipeCreatedEvent(DateTime recipeCreationDate, string recipeId, string recipeName, string authorName, string message = "")
     {
         this.Id = Guid.NewGuid();
         this.CreationDate = DateTime.UtcNow;
 
+        this.RecipeCreationDate = recipeCreationDate;
         this.RecipeId = recipeId;
         this.RecipeName = recipeName;
         this.AuthorName = authorName;

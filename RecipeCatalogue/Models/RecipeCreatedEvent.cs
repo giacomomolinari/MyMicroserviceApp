@@ -3,10 +3,12 @@ using System;
 
 namespace RecipeCatalogue.Models;
 
-public record RecipeCreatedEvent: IntegrationEvent
+public class RecipeCreatedEvent: IntegrationEvent
 {
 
     public string? Message { get; private set; }
+
+    public DateTime? RecipeCreationDate { get; private set; }
     
     public string? RecipeId { get; private set; }
 
@@ -15,11 +17,12 @@ public record RecipeCreatedEvent: IntegrationEvent
     public string? AuthorName { get; private set; }
 
 
-    public RecipeCreatedEvent(string recipeId, string recipeName, string authorName, string message = "")
+    public RecipeCreatedEvent(DateTime recipeCreationDate, string recipeId, string recipeName, string authorName, string message = "")
     {
         this.Id = Guid.NewGuid();
         this.CreationDate = DateTime.UtcNow;
 
+        this.RecipeCreationDate = recipeCreationDate;
         this.RecipeId = recipeId;
         this.RecipeName = recipeName;
         this.AuthorName = authorName;
@@ -32,6 +35,7 @@ public record RecipeCreatedEvent: IntegrationEvent
         this.CreationDate = DateTime.UtcNow;
 
         this.RecipeId = post.Id;
+        this.RecipeCreationDate = post.Timestamp;
         this.RecipeName = post.Title;
         this.AuthorName = post.AuthorName;
         this.Message = "";

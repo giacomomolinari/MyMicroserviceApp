@@ -9,11 +9,12 @@ public class RecipePost
     [BsonRepresentation(BsonType.ObjectId)] // converted automatically from ObjectId type to string
     public string? Id { get; set; }
 
-    public DateTime? Timestamp { get; set; } = DateTime.UtcNow; // Automatically set Timestamp to current time when creating a RecipePost object
-
     // other fields are automatically mapped to fields of the same name
     [BsonRepresentation(BsonType.ObjectId)] // converted automatically from ObjectId type to string
     public string? AuthorId { get; set; }
+
+    public DateTime? Timestamp { get; set; } = DateTime.UtcNow; // Automatically set Timestamp to current time when creating a RecipePost object
+
     public string? AuthorName { get; set; }
     public string? Title { get; set; }
     public string? Content { get; set; }

@@ -3,7 +3,7 @@ using System;
 
 namespace EventBusTest;
 
-public record TestEvent: IntegrationEvent
+public class TestEvent: IntegrationEvent
 {
 
     public string Message { get; set; }

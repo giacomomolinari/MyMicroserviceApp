@@ -1,6 +1,6 @@
 namespace EventBusInterface;
 
-public abstract record IntegrationEvent
+public abstract class IntegrationEvent
 {
     public Guid Id {get; init;}
 
