@@ -12,6 +12,8 @@ public class RecipeEntry
     [BsonRepresentation(BsonType.ObjectId)]
     public string? RecipeId { get; set; }
 
+    public DateTime? RecipeCreationDate { get; set; }
+
     public string? AuthorName { get; set; }
 
     public string? RecipeName { get; set; }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using RankingService.Models;
+using RankingService.Services;
 
 namespace RankingService.Controllers;
 
@@ -7,16 +9,18 @@ namespace RankingService.Controllers;
 public class RankingServiceController
 {
     private readonly ILogger<RankingServiceController> _logger;
+    private readonly RankingDBService _recipeCollection;
 
-    public RankingServiceController(ILogger<RankingServiceController> logger)
+    public RankingServiceController(ILogger<RankingServiceController> logger, RankingDBService dbService)
     {
         _logger = logger;
+        _recipeCollection = dbService;
     }
 
     [HttpGet]
-    public List<string> Get()
+    public async Task<List<RecipeEntry>> Get()
     {
-        List<string> res = ["value1", "value2"];
+        List<RecipeEntry> res = await _recipeCollection.GetAsync();
         return res;
     }
 }
