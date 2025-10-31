@@ -5,6 +5,15 @@ namespace RankingService.Models;
 
 public class RecipeEntry
 {
+    public RecipeEntry(string? recipeId, DateTime? creationDate, string? authorName, string? recipeName, int? likes)
+    {
+        RecipeId = recipeId;
+        RecipeCreationDate = creationDate;
+        AuthorName = authorName;
+        RecipeName = recipeName;
+        Likes = likes;
+    }
+
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
