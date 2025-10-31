@@ -1,6 +1,12 @@
 using RankingService.Models;
 using RankingService.Services;
 
+using SubsManagerInterface;
+using SubsManagerImplementation;
+using EventBusInterface;
+using EventBusImplementation;
+using EventBusInterface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://*:80");
@@ -25,7 +31,34 @@ builder.Services.Configure<RankingDatabaseSettings>(
 // add RankingDBService to the DI so that controller can use it to interact with the DB
 builder.Services.AddSingleton<RankingDBService>();
 
+// Add SubsManager to the DI
+builder.Services.AddSingleton<ISubsManager, SubsManagerStub>();
+
+// Add EventBus to the DI, passing the settings as arguments
+builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
+{
+    var subsManager = serviceProvider.GetRequiredService<ISubsManager>();
+
+    return new IntegrationEventBusRMQ(
+        connectionString: builder.Configuration["RabbitMQHost:ConnectionString"],
+        brokerName: builder.Configuration["RabbitMQHost:BrokerName"],
+        serviceName: builder.Configuration["RabbitMQHost:ServiceName"],
+        subsManager: subsManager,
+        serviceProvider: serviceProvider
+        );
+});
+
+// ADD EVENT HANDLERS TO DI
+builder.Services.AddTransient<RecipeCreatedEventHandler>();
+
 var app = builder.Build();
+
+// subscribe to RecipeCreatedEvent events via the singleton IntegrationEventBus defined above
+IntegrationEventBus myBus = app.Services.GetRequiredService<IntegrationEventBus>();
+
+await myBus.EstablishConsumeConnection();
+await myBus.Subscribe<RecipeCreatedEvent, RecipeCreatedEventHandler>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,4 +73,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); // blocks thread

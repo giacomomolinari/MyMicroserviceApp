@@ -49,7 +49,7 @@ builder.Services.Configure<RabbitMQSettings>(
 // Add SubsManager to the DI
 builder.Services.AddSingleton<ISubsManager, SubsManagerStub>();
 
-// Add EventBus to the DI, passing the settings a
+// Add EventBus to the DI, passing the settings 
 builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
 {
     var rabbitMQSettings = serviceProvider.GetRequiredService<IOptions<RabbitMQSettings>>().Value;

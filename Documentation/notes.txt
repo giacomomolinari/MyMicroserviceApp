@@ -30,7 +30,7 @@ Offers methods to publish events and subscribe to them.
             RUNNING INDIVIDUAL SERVICES IN DOCKER
 ////////////////////////////////////////////////////////////////////
 
-To build an individual service's, e.g. RecipeCatalogue's, image, in directory ./MyMicroserviceApp run:
+To build an individual service's image, e.g. RecipeCatalogue's image, in directory ./MyMicroserviceApp run:
  
     docker build -t recipecatalogue -f RecipeCatalogue/Dockerfile .
 
@@ -55,7 +55,8 @@ Then to run a container on the network, use the following variation of the above
     docker run -p 8080:80 --network MyMicroserviceAppNetwork -d --name recipes recipecatalogue
 
 
-
+To follow the logs of a given container from your console, use:
+    docker logs -f [container_name]
 
 
 
