@@ -6,7 +6,9 @@ public class RecipeLikeEvent: IntegrationEvent
 {
     public string? RecipeId { get;  set; }
 
-    public string? UserId { get;  set; }
+
+    // CAN PROBABLY DO WITHOUT THE UserId and TimeStamp fields...
+    public string? UserId { get; set; }
 
     public DateTime? Timestamp { get; set; }
 

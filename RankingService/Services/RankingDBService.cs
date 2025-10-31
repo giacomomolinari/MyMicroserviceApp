@@ -1,6 +1,7 @@
 using RankingService.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using RabbitMQ.Client.Exceptions;
 
 namespace RankingService.Services;
 
@@ -43,10 +44,20 @@ public class RankingDBService
     {
         await _recipeCollection.DeleteOneAsync(x => x.Id == id);
     }
-    
-    public async Task DeleteGivenRecipeIdAsync(string id)
+
+    public async Task DeleteGivenRecipeIdAsync(string recipeId)
     {
-        await _recipeCollection.DeleteOneAsync(x => x.RecipeId == id);
+        await _recipeCollection.DeleteOneAsync(x => x.RecipeId == recipeId);
+    }
+
+    public async Task IncreaseLikesAsync(string recipeId)
+    {
+        await _recipeCollection.UpdateOneAsync(x => x.RecipeId == recipeId, Builders<RecipeEntry>.Update.Inc(x => x.Likes, 1));
+    }
+    
+    public async Task DecreaseLikesAsync(string recipeId)
+    {
+        await _recipeCollection.UpdateOneAsync(x => x.RecipeId == recipeId, Builders<RecipeEntry>.Update.Inc(x => x.Likes, -1));
     }
 
 }
