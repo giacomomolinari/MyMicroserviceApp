@@ -16,8 +16,10 @@ ISubsManager subsManager = new SubsManagerStub();
 
 // create service provider (needed to initialize IntegrationEventBusRMQ)
 var services = new ServiceCollection();
-// add event handler
+
+// add event handlers
 services.AddTransient<RecipeCreatedEventHandler>();
+services.AddTransient<RecipeLikeEventHandler>();
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -27,6 +29,9 @@ await myBus.EstablishConsumeConnection();
 
 // subscribe to RecipeCreatedEvent events
 await myBus.Subscribe<RecipeCreatedEvent, RecipeCreatedEventHandler>();
+
+// subscribe to RecipeLikeEvent events
+await myBus.Subscribe<RecipeLikeEvent, RecipeLikeEventHandler>();
 
 Console.WriteLine("Press [Enter] to exit");
 Console.ReadLine();
