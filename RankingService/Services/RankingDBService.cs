@@ -38,10 +38,15 @@ public class RankingDBService
     {
         await _recipeCollection.ReplaceOneAsync(x => x.Id == id, entry);
     }
-    
+
     public async Task DeleteAsync(string id)
     {
         await _recipeCollection.DeleteOneAsync(x => x.Id == id);
+    }
+    
+    public async Task DeleteGivenRecipeIdAsync(string id)
+    {
+        await _recipeCollection.DeleteOneAsync(x => x.RecipeId == id);
     }
 
 }

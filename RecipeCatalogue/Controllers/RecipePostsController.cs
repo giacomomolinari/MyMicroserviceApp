@@ -103,6 +103,10 @@ public class RecipePostsController : ControllerBase
 
         await _recipeDBService.RemoveAsync(id);
 
+        // publish event for recipe deletion
+        RecipeDeletedEvent @event = new RecipeDeletedEvent(id);
+        await _eventBus.Publish(@event);
+
         return NoContent();
     }
 

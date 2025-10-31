@@ -5,7 +5,7 @@ using SubsManagerInterface;
 using SubsManagerImplementation;
 using EventBusInterface;
 using EventBusImplementation;
-using EventBusInterface;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,6 @@ builder.WebHost.UseUrls("http://*:80");
 // in Controllers, serialize/deserialize in case-insensitive way
 builder.Services.AddControllers().AddJsonOptions(
         options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
-
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -51,6 +50,7 @@ builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
 // ADD EVENT HANDLERS TO DI
 builder.Services.AddTransient<RecipeCreatedEventHandler>();
 builder.Services.AddTransient<RecipeLikeEventHandler>();
+builder.Services.AddTransient<RecipeDeletedEventHandler>();
 
 var app = builder.Build();
 
@@ -61,6 +61,7 @@ await myBus.EstablishConsumeConnection();
 
 await myBus.Subscribe<RecipeCreatedEvent, RecipeCreatedEventHandler>();
 await myBus.Subscribe<RecipeLikeEvent, RecipeLikeEventHandler>();
+await myBus.Subscribe<RecipeDeletedEvent, RecipeDeletedEventHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
