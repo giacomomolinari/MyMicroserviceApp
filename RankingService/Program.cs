@@ -50,15 +50,17 @@ builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
 
 // ADD EVENT HANDLERS TO DI
 builder.Services.AddTransient<RecipeCreatedEventHandler>();
+builder.Services.AddTransient<RecipeLikeEventHandler>();
 
 var app = builder.Build();
 
-// subscribe to RecipeCreatedEvent events via the singleton IntegrationEventBus defined above
+// subscribe to Events via the singleton IntegrationEventBus defined above
 IntegrationEventBus myBus = app.Services.GetRequiredService<IntegrationEventBus>();
 
 await myBus.EstablishConsumeConnection();
-await myBus.Subscribe<RecipeCreatedEvent, RecipeCreatedEventHandler>();
 
+await myBus.Subscribe<RecipeCreatedEvent, RecipeCreatedEventHandler>();
+await myBus.Subscribe<RecipeLikeEvent, RecipeLikeEventHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

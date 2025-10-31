@@ -46,7 +46,7 @@ To run the image in a Docker container, run:
 
 This creates a container called "recipes" whose api can be accessed on port 8080.
 
-To implement connections between services running on Docker, first create a virtual network with:
+To implement connegitctions between services running on Docker, first create a virtual network with:
 
     docker network create MyMicroserviceAppNetwork
 
