@@ -14,7 +14,7 @@ class RecipeDeletedEventHandler: IntegrationEventHandler<RecipeDeletedEvent>
     }
 
     public async Task HandleAsync(RecipeDeletedEvent @event){
-        Console.WriteLine($"RecipeDeletedEvent for Recipe Id = {@event.RecipeId} is being handled by its custom handler.");
+        // TEST ONLY: Console.WriteLine($"RecipeDeletedEvent for Recipe Id = {@event.RecipeId} is being handled by its custom handler.");
         await _recipeCollection.DeleteGivenRecipeIdAsync(@event.RecipeId);
 
     }

@@ -14,9 +14,9 @@ public class RecipeLikeEventHandler : IntegrationEventHandler<RecipeLikeEvent>
 
     public async Task HandleAsync(RecipeLikeEvent @event)
     {
-        Console.WriteLine($"RecipeLikeEvent is being handled by its custom handler.");
+        // TEST ONLY: Console.WriteLine($"RecipeLikeEvent is being handled by its custom handler.");
         string action = @event.IsLike == true ? "LIKED" : "UNLIKED";
-        Console.WriteLine($"Recipe with Id = {@event.RecipeId} was {action} by User with Id = {@event.UserId}");
+        // TEST ONLY: Console.WriteLine($"Recipe with Id = {@event.RecipeId} was {action} by User with Id = {@event.UserId}");
 
         if (@event.IsLike == true)
         {

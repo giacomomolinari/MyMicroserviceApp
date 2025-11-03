@@ -58,6 +58,9 @@ Then to run a container on the network, use the following variation of the above
 To follow the logs of a given container from your console, use:
     docker logs -f [container_name]
 
+
+
+
 ////////////////////////////////////////////////////////////////////
             RUNNING THE ENTIRE APP (DOCKER COMPOSE)
 ////////////////////////////////////////////////////////////////////
