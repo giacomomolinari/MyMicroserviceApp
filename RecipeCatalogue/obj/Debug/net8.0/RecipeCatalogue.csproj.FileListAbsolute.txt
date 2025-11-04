@@ -564,3 +564,13 @@ C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\obj\Debug\net8.0\refint
 C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\obj\Debug\net8.0\RecipeCatalogue.pdb
 C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\obj\Debug\net8.0\RecipeCatalogue.genruntimeconfig.cache
 C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\obj\Debug\net8.0\ref\RecipeCatalogue.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\EventBusImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\EventBusInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\SubsManagerImplementation.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\SubsManagerInterface.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\EventBusImplementation.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\EventBusInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\SubsManagerInterface.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\bin\Debug\net8.0\SubsManagerImplementation.pdb
+C:\Users\molin\Desktop\MyMicroserviceApp\RecipeCatalogue\obj\Debug\net8.0\RecipeCatalogue.sourcelink.json

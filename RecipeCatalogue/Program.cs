@@ -8,6 +8,8 @@ using EventBusInterface;
 using EventBusImplementation;
 using Microsoft.Extensions.Options;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://*:80");
@@ -80,7 +82,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-// Used for integration tests
-public partial class Program { }

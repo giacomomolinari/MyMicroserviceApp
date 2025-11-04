@@ -77,5 +77,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run(); // blocks thread
-
-public partial class Program { }
