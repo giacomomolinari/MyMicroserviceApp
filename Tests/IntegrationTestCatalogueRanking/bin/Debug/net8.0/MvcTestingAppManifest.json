@@ -1,0 +1,8 @@
+{
+  "EventBusImplementation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusImplementation",
+  "EventBusInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\EventBusInterface",
+  "RankingService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\RankingService",
+  "RecipeCatalogue, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\RecipeCatalogue",
+  "SubsManagerImplementation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerImplementation",
+  "SubsManagerInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\molin\\Desktop\\MyMicroserviceApp\\SubsManagerInterface"
+}

@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "SubsManagerImplementation/1.0.0": {
+        "dependencies": {
+          "SubsManagerInterface": "1.0.0"
+        },
+        "runtime": {
+          "SubsManagerImplementation.dll": {}
+        }
+      },
+      "SubsManagerInterface/1.0.0": {
+        "runtime": {
+          "SubsManagerInterface.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SubsManagerImplementation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SubsManagerInterface/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

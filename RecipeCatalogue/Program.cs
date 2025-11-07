@@ -8,8 +8,6 @@ using EventBusInterface;
 using EventBusImplementation;
 using Microsoft.Extensions.Options;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://*:80");
@@ -82,3 +80,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+namespace RecipeCatalogue
+{
+    public partial class Program { };
+}

@@ -77,3 +77,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run(); // blocks thread
+
+namespace RankingService
+{
+    public partial class Program { };
+
+}

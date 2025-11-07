@@ -39,7 +39,7 @@ public class RecipeLikesController : ControllerBase
 
     // GET: api/RecipeLikes/5
     // NEED TO CHECK THE USER DOES NOT ALREADY LIKE RECIPE? ALTHOUGH MIGHT BE BEST TO 
-    // DO THAT FRONTENT MAYBE, SINCE NEED TO SHOW USER THAT HE ALREADY LIKES RECIPE
+    // DO THAT FRONTEND MAYBE, SINCE WE NEED TO SHOW USER THAT HE ALREADY LIKES RECIPE
     // ANYWAY...
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<RecipeLike>> GetRecipeLikePair(string id)
