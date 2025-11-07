@@ -24,6 +24,15 @@ public class RankingServiceController: ControllerBase
         return res;
     }
 
+    [HttpGet("top")]
+    public async Task<List<RecipeEntry>> GetRanked([FromQuery] int num, [FromQuery] int hours)
+    {
+        // Should really be caching these in Redis, with some restrictions on the accepted values
+        // of num and hours (e.g. num=10 or 100, hours= 24 or 24*7 or 24*31 or 24*365 or -1 (for all time))
+        List<RecipeEntry> res = await _recipeCollection.GetRanked(num, hours);
+        return res;
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecipeEntry(string id)
     {

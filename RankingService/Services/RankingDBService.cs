@@ -54,10 +54,23 @@ public class RankingDBService
     {
         await _recipeCollection.UpdateOneAsync(x => x.RecipeId == recipeId, Builders<RecipeEntry>.Update.Inc(x => x.Likes, 1));
     }
-    
+
     public async Task DecreaseLikesAsync(string recipeId)
     {
         await _recipeCollection.UpdateOneAsync(x => x.RecipeId == recipeId, Builders<RecipeEntry>.Update.Inc(x => x.Likes, -1));
+    }
+    
+    public async Task<List<RecipeEntry>> GetRanked(int num, int hours)
+    {
+        DateTime cutoffTime = DateTime.UtcNow.AddHours(-hours);
+        
+        List<RecipeEntry> res = await _recipeCollection
+        .Find(Builders<RecipeEntry>.Filter.Gte(x => x.RecipeCreationDate, cutoffTime))
+        .Sort(Builders<RecipeEntry>.Sort.Descending(x => x.Likes))
+        .Limit(num)
+        .ToListAsync();
+
+        return res;
     }
 
 }
