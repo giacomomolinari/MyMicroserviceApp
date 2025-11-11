@@ -12,6 +12,7 @@ using SubsManagerInterface;
 using SubsManagerImplementation;
 using System.Security.Authentication.ExtendedProtection;
 using Microsoft.Extensions.DependencyInjection;
+using FluentAssertions;
 
 namespace EventBusTest;
 
@@ -108,7 +109,8 @@ public class TestRabbitMQBus
         var receivedMessage = await tcs.Task.WaitAsync(cts.Token);
         var receivedEvent = JsonSerializer.Deserialize<TestEvent>(receivedMessage);
 
-        Assert.Equal(testEvent, receivedEvent);
+        // deals with the fact that TestEvent is a class, not a record, so Assert.Equal fails
+        receivedEvent.Should().BeEquivalentTo(receivedEvent);
     }
 
     // Test implementation of Subscribe method:
@@ -140,7 +142,8 @@ public class TestRabbitMQBus
         await myBus.Publish(testEvent);
 
         var received = await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        Assert.Equal(testEvent, received);
+
+        received.Should().BeEquivalentTo(testEvent);
     }
 
 }

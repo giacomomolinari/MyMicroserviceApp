@@ -112,3 +112,4 @@ C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\Sub
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\SubsManagerImplementation.pdb
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\molin\Desktop\MyMicroserviceApp\Tests\EventBusTest\bin\Debug\net8.0\FluentAssertions.dll
