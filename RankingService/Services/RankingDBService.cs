@@ -59,11 +59,11 @@ public class RankingDBService
     {
         await _recipeCollection.UpdateOneAsync(x => x.RecipeId == recipeId, Builders<RecipeEntry>.Update.Inc(x => x.Likes, -1));
     }
-    
+
     public async Task<List<RecipeEntry>> GetRanked(int num, int hours)
     {
         DateTime cutoffTime = DateTime.UtcNow.AddHours(-hours);
-        
+
         List<RecipeEntry> res = await _recipeCollection
         .Find(Builders<RecipeEntry>.Filter.Gte(x => x.RecipeCreationDate, cutoffTime))
         .Sort(Builders<RecipeEntry>.Sort.Descending(x => x.Likes))
@@ -71,6 +71,11 @@ public class RankingDBService
         .ToListAsync();
 
         return res;
+    }
+    
+    public async Task<long> CountEntries()
+    {
+        return await _recipeCollection.Find(_ => true).CountDocumentsAsync();
     }
 
 }
