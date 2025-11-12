@@ -51,6 +51,12 @@ public class RecipePostsController : ControllerBase
     }
 
 
+    // GET: api/RecipePosts/count
+    [HttpGet("count")]
+    public async Task<ActionResult<long>> GetRecipePostsCount()
+    {
+        return await _recipeDBService.CountEntries();
+    }
 
     // PUT: api/RecipePosts/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

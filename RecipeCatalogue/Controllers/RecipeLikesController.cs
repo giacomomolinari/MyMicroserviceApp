@@ -55,6 +55,13 @@ public class RecipeLikesController : ControllerBase
     }
 
 
+    // GET: api/RecipeLikes/count
+    [HttpGet("count")]
+    public async Task<ActionResult<long>> GetRecipePostsCount()
+    {
+        return await _likesCollectionService.CountEntries();
+    }
+
 
     // PUT: api/RecipeLikes/5
     // SHOULD REMOVE THIS...
@@ -110,11 +117,15 @@ public class RecipeLikesController : ControllerBase
         return NoContent();
     }
 
+
+
+
     private async Task<bool> RecipeLikePairExists(string id)
     {
         var recipeLikeObj = await _likesCollectionService.GetAsync(id);
         return recipeLikeObj is not null;
     }
+
 
 
 

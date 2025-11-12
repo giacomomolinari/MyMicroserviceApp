@@ -39,5 +39,9 @@ public class LikesCollectionService
     public async Task<List<RecipeLike>> GetAllLikesForRecipe (string recipeId) =>
         await _likesCollection.Find(x => x.RecipeId == recipeId).ToListAsync();
         
-    
+    public async Task<long> CountEntries()
+    {
+        var res = await _likesCollection.Find(_ => true).CountDocumentsAsync();
+        return res;
+    } 
 }

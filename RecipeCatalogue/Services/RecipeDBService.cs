@@ -35,4 +35,10 @@ public class RecipeDBService
     public async Task RemoveAsync(string id) =>
         await _recipeCollection.DeleteOneAsync(x => x.Id == id);
 
+    public async Task<long> CountEntries()
+    {
+        var res = await _recipeCollection.Find(_ => true).CountDocumentsAsync();
+        return res;
+    } 
+
 }
