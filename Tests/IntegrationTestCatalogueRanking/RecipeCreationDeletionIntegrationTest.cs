@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 using RecipeCatalogue.Models;
 using Xunit;
 
-// needed to avoid events from different tests being transmitted concurrently
+// needed to avoid integration events from different tests interfering with each other
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace IntegrationTestCatalogueRanking;
@@ -29,7 +29,6 @@ public class RecipeCreationDeletionIntegrationTest : IClassFixture<CustomRecipeC
         _rankingServiceFactory = rankingServiceFactory;
         _rankingsClient = _rankingServiceFactory.CreateClient();
     }
-
 
 
     // First test that RecipeCatalogue is running and can access its database by sending a GET request
@@ -136,8 +135,6 @@ public class RecipeCreationDeletionIntegrationTest : IClassFixture<CustomRecipeC
         Assert.Equal(initialCount, finalCount);
 
     }
-
-
 
     private async Task<long> getRecipePostCount()
     {
