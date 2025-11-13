@@ -10,4 +10,6 @@ public class RecipeDBSettings
     public string RecipeCollectionName { get; set; } = null!;
 
     public string LikesCollectionName { get; set; } = null!;
+
+    public string TagsCollectionName { get; set; } = null!;
 }

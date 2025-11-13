@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SubsManagerImplementation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb492afe1e840c65c344fc64d03fb7f4e3b20fee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc9d2bcca2ebf0594c6b3a5d5d69ec3454e81c7f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SubsManagerImplementation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SubsManagerImplementation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

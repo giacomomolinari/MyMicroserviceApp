@@ -9,6 +9,10 @@ public class RecipeDBService
 {
     private readonly IMongoCollection<RecipePost> _recipeCollection;
 
+    private readonly IMongoCollection<RecipeTag> _tagsCollection;
+
+    private readonly List<string> _tagsInitList = ["vegan","vegetarian", "high-fibre", "high-protein", "quick", "easy"];
+
     // gets the recipeDBSettings object from DI via constructor injection
     // then uses it to retrieve tha Recipe table in DB and assign it to _recipeCollection
     public RecipeDBService(IOptions<RecipeDBSettings> recipeDBSettings)
@@ -18,6 +22,17 @@ public class RecipeDBService
         var mongoDatabase = mongoClient.GetDatabase(recipeDBSettings.Value.DatabaseName);
 
         _recipeCollection = mongoDatabase.GetCollection<RecipePost>(recipeDBSettings.Value.RecipeCollectionName);
+
+        _tagsCollection = mongoDatabase.GetCollection<RecipeTag>(recipeDBSettings.Value.TagsCollectionName);
+    }
+
+    public async Task TagsCollectionInit()
+    {
+        long tagsNumber = await _tagsCollection.CountDocumentsAsync(_ => true);
+        if (tagsNumber == 0)
+        {
+            await _tagsCollection.InsertManyAsync(_tagsInitList.Select(x => new RecipeTag(x)));
+        }
     }
 
     public async Task<List<RecipePost>> GetAsync() =>

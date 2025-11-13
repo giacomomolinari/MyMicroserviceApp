@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 // entire lifespan of the application
 builder.Services.AddSingleton<RecipeDBService>();
 
+
 builder.Services.AddSingleton<LikesCollectionService>();
 
 // In memory store, USED FOR TESTING
@@ -66,8 +67,16 @@ builder.Services.AddSingleton<IntegrationEventBus>(serviceProvider =>
 
 var app = builder.Build();
 
+
+// Initialise list of tag values if needed
+using (var scope = app.Services.CreateScope())
+{
+    RecipeDBService db = scope.ServiceProvider.GetRequiredService<RecipeDBService>();
+    await db.TagsCollectionInit();
+}
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) 
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
