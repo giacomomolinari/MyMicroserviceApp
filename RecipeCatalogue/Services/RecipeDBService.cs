@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using MongoDB.Driver.Linq;
+using MongoDB.Bson;
 
 namespace RecipeCatalogue.Services;
 
@@ -47,14 +48,23 @@ public class RecipeDBService
         await _recipeCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
 
-    /*
-    public async Task<List<(RecipePost, long)>> GetWithLikesCountAsync()
+    public async Task<List<AuthorPosts>> GetPostsByAuthorAsync()
     {
-        _recipeCollection.AsQueryable()
-            .Lookup(,
-            recipe => recipe.Tags)
+        var result = await _recipeCollection.Aggregate()
+            .Group(x => x.AuthorId, g => new AuthorPosts
+            { 
+                AuthorId = g.Key,
+                AuthorName  = g.First().AuthorName,
+                TotalPosts = g.Count(), 
+                LastPost = g.Max(x => x.Timestamp),
+                PostTitles = g.Select(x => x.Title).ToList()
+            })
+            .SortByDescending(x => x.TotalPosts)
+            .ToListAsync();
+        
+        return result;
     }
-    */
+
 
     public async Task CreateAsync(RecipePost newRecipePost) =>
         await _recipeCollection.InsertOneAsync(newRecipePost);

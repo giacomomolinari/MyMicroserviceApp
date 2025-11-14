@@ -116,6 +116,11 @@ public class RecipePostsController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("author-posts")]
+    public async Task<ActionResult<IEnumerable<AuthorPosts>>> GetAuthorPosts(){
+        return await _recipeDBService.GetPostsByAuthorAsync();
+    }
+
     private async Task<bool> RecipePostExists(string id)
     {
         var recipePost = await _recipeDBService.GetAsync(id);
