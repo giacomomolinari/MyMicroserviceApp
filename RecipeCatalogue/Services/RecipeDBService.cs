@@ -2,6 +2,7 @@ using RecipeCatalogue.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using MongoDB.Driver.Linq;
 
 namespace RecipeCatalogue.Services;
 
@@ -11,7 +12,9 @@ public class RecipeDBService
 
     private readonly IMongoCollection<RecipeTag> _tagsCollection;
 
-    private readonly List<string> _tagsInitList = ["vegan","vegetarian", "high-fibre", "high-protein", "quick", "easy"];
+    private readonly IMongoCollection<RecipeLike> _likesCollection;
+
+    private readonly List<string> _tagsInitList = ["vegan", "vegetarian", "high-fibre", "high-protein", "quick", "easy"];
 
     // gets the recipeDBSettings object from DI via constructor injection
     // then uses it to retrieve tha Recipe table in DB and assign it to _recipeCollection
@@ -24,6 +27,8 @@ public class RecipeDBService
         _recipeCollection = mongoDatabase.GetCollection<RecipePost>(recipeDBSettings.Value.RecipeCollectionName);
 
         _tagsCollection = mongoDatabase.GetCollection<RecipeTag>(recipeDBSettings.Value.TagsCollectionName);
+
+        _likesCollection = mongoDatabase.GetCollection<RecipeLike>(recipeDBSettings.Value.LikesCollectionName);
     }
 
     public async Task TagsCollectionInit()
@@ -41,6 +46,16 @@ public class RecipeDBService
     public async Task<RecipePost?> GetAsync(string id) =>
         await _recipeCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+
+    /*
+    public async Task<List<(RecipePost, long)>> GetWithLikesCountAsync()
+    {
+        _recipeCollection.AsQueryable()
+            .Lookup(,
+            recipe => recipe.Tags)
+    }
+    */
+
     public async Task CreateAsync(RecipePost newRecipePost) =>
         await _recipeCollection.InsertOneAsync(newRecipePost);
 
@@ -54,6 +69,34 @@ public class RecipeDBService
     {
         var res = await _recipeCollection.Find(_ => true).CountDocumentsAsync();
         return res;
+    }
+
+
+    /* Likes Collection Service */
+    public async Task<List<RecipeLike>> GetLikesAsync() =>
+        await _likesCollection.Find(_ => true).ToListAsync();
+
+    public async Task<RecipeLike?> GetLikesAsync(string id) =>
+        await _likesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+    public async Task CreateLikeAsync(RecipeLike newRecipeLike) =>
+        await _likesCollection.InsertOneAsync(newRecipeLike);
+
+    public async Task UpdateLikeAsync(string id, RecipeLike updatedRecipeLike) =>
+        await _likesCollection.ReplaceOneAsync(x => x.Id == id, updatedRecipeLike);
+
+    public async Task RemoveLikeAsync(string id) =>
+        await _likesCollection.DeleteOneAsync(x => x.Id == id);
+
+    
+    public async Task<List<RecipeLike>> GetAllLikesForRecipe (string recipeId) =>
+        await _likesCollection.Find(x => x.RecipeId == recipeId).ToListAsync();
+        
+    public async Task<long> CountLikes()
+    {
+        var res = await _likesCollection.Find(_ => true).CountDocumentsAsync();
+        return res;
     } 
+
 
 }

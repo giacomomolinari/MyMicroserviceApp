@@ -29,7 +29,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<RecipeDBService>();
 
 
-builder.Services.AddSingleton<LikesCollectionService>();
+// merged into RecipeDBService
+// builder.Services.AddSingleton<LikesCollectionService>();
 
 // In memory store, USED FOR TESTING
 //builder.Services.AddDbContext<RecipeCatalogueContext>(opt => 

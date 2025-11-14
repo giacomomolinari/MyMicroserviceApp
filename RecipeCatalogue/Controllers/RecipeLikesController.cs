@@ -16,11 +16,11 @@ namespace RecipeCatalogue.Controllers;
 [ApiController]
 public class RecipeLikesController : ControllerBase
 {
-    private readonly LikesCollectionService _likesCollectionService;
+    private readonly RecipeDBService _likesCollectionService;
 
     private readonly IntegrationEventBus _eventBus;
 
-    public RecipeLikesController(LikesCollectionService likesCollectionService, IntegrationEventBus eventBus)
+    public RecipeLikesController(RecipeDBService likesCollectionService, IntegrationEventBus eventBus)
     {
         _likesCollectionService = likesCollectionService;
         _eventBus = eventBus;
@@ -32,7 +32,7 @@ public class RecipeLikesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RecipeLike>>> GetLikesTable()
     {
-        return await _likesCollectionService.GetAsync();
+        return await _likesCollectionService.GetLikesAsync();
     }
 
 
@@ -44,7 +44,7 @@ public class RecipeLikesController : ControllerBase
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<RecipeLike>> GetRecipeLikePair(string id)
     {
-        var recipeLikeObj = await _likesCollectionService.GetAsync(id);
+        var recipeLikeObj = await _likesCollectionService.GetLikesAsync(id);
 
         if (recipeLikeObj == null)
         {
@@ -59,7 +59,7 @@ public class RecipeLikesController : ControllerBase
     [HttpGet("count")]
     public async Task<ActionResult<long>> GetRecipePostsCount()
     {
-        return await _likesCollectionService.CountEntries();
+        return await _likesCollectionService.CountLikes();
     }
 
 
@@ -74,13 +74,13 @@ public class RecipeLikesController : ControllerBase
             return BadRequest();
         }
 
-        var recipe = await _likesCollectionService.GetAsync(id);
+        var recipe = await _likesCollectionService.GetLikesAsync(id);
         if (recipe == null)
         {
             return NotFound();
         }
 
-        await _likesCollectionService.UpdateAsync(id, recipeLikeObj);
+        await _likesCollectionService.UpdateLikeAsync(id, recipeLikeObj);
 
         return NoContent();
     }
@@ -90,7 +90,7 @@ public class RecipeLikesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<RecipeLike>> PostRecipeLikePair(RecipeLike recipeLikeObj)
     {
-        await _likesCollectionService.CreateAsync(recipeLikeObj);
+        await _likesCollectionService.CreateLikeAsync(recipeLikeObj);
 
         // post event that new Like object was created
         RecipeLikeEvent likeCreatedEvent = new RecipeLikeEvent(recipeLikeObj, isLike: true);
@@ -103,13 +103,13 @@ public class RecipeLikesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecipLikePair(string id)
     {
-        var recipeLikeObj = await _likesCollectionService.GetAsync(id);
+        var recipeLikeObj = await _likesCollectionService.GetLikesAsync(id);
         if (recipeLikeObj is null)
         {
             return NotFound();
         }
 
-        await _likesCollectionService.RemoveAsync(id);
+        await _likesCollectionService.RemoveLikeAsync(id);
 
         RecipeLikeEvent likeDeletedEvent = new RecipeLikeEvent(recipeLikeObj, isLike: false);
         await _eventBus.Publish(likeDeletedEvent);
@@ -118,11 +118,9 @@ public class RecipeLikesController : ControllerBase
     }
 
 
-
-
     private async Task<bool> RecipeLikePairExists(string id)
     {
-        var recipeLikeObj = await _likesCollectionService.GetAsync(id);
+        var recipeLikeObj = await _likesCollectionService.GetLikesAsync(id);
         return recipeLikeObj is not null;
     }
 
