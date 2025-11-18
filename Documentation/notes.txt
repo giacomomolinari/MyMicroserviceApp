@@ -6,7 +6,21 @@
     RECIPECATALOGUE
 ///////////////////////////////
 
-...
+Main microservice providing an HTTP API for fetching, creating, updating and deleting
+recipes and likes. 
+
+Publishes events on recipe creation/deletion, as well as on likes creation/deletion.
+
+///////////////////////////////
+    RANKINGSERVICE
+///////////////////////////////
+
+Microservice tasked with keeping a ranking of recently created recipes and their likes. The ranking is
+stored in an independent database and accessible via HTTP API.
+
+It consumes recipe creation/deletion events, and keeps track of likes count by consuming likes 
+creation/deletion events.
+
 
 
 ///////////////////////////////
@@ -18,10 +32,6 @@ Inteface in EventBusInterface.
 Implementation using RabbitMQ in EventBusImplementation.
 
 Offers methods to publish events and subscribe to them.
-
-...
-
-
 
 
 
@@ -82,6 +92,21 @@ In the appropriate sub-directory, run:
     
     dotnet test
 
+### EventBusTest
+This is a unit test for the libraries implementing the event bus on top of RabbitMQ.
+The test requires RabbitMQ to be running in Docker as described below.
+
+### EventListener
+This is a console app (NOT AN ACTUAL TEST) used as a rudimentary integration test for the event bus.
+The app uses the EventBus class library to listen to a given event type, and print
+out a message when the event is received. A convenient way to see which events are being sent.
+
+### IntegrationTestCatalogueRanking
+Integaration test for the microservices RecipeCatalogue and RankingService. 
+- The test launches in-memory instances of the two microservices.
+- Then it sends RecipeCatalogue various http requests that generate events. 
+- RankingService should subscribe to these events and updates its own database 
+  once it receives them. The test checks that this is the case.
 
 
 
