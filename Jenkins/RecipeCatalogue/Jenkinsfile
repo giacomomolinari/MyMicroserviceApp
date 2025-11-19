@@ -3,7 +3,7 @@ pipeline{
     stages {
         stage('Build'){
             steps{
-                bat 'docker run -p 8080:80 --network MyMicroserviceAppNetwork --rm --name recipes recipecatalogue'
+                bat 'docker run -p 8081:80 --network MyMicroserviceAppNetwork --rm --name recipes recipecatalogue'
             }
         }
     }
