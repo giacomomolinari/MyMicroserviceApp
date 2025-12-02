@@ -81,23 +81,14 @@ public class IntegrationEventBusRMQ : IntegrationEventBus
 
     private async Task GenericHandler(object? model, BasicDeliverEventArgs ea)
     {
-
-        // Get the type name of the event received
         string eventName = ea.RoutingKey;
         var body = ea.Body.ToArray();
         string serializedEvent = Encoding.UTF8.GetString(body);
-
         // get the concrete event type of the event received
         Type eventType = _subsManager.getEventType(eventName);
-
-        // TEST ONLY 
-        //Console.WriteLine($"Received serialized event {serializedEvent} and made it to deserialization");
-
         var @event = JsonSerializer.Deserialize(serializedEvent, eventType);
 
-        // TEST ONLY 
-        //Console.WriteLine($"Made it past deserialization with event = {@event}");
-        
+          
         // Ask _subsManager for its handler type
         List<Type>? handlerList = _subsManager.getHandlerTypeIfSubscribed(eventName);
 
